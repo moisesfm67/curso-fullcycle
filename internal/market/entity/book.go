@@ -6,7 +6,7 @@ import (
 )
 
 type Book struct {
-	Orders        []*Order
+	Order         []*Order
 	Transactions  []*Transaction
 	OrdersChan    chan *Order
 	OrdersChanOut chan *Order
@@ -15,7 +15,7 @@ type Book struct {
 
 func NewBook(orderChan chan *Order, orderChanOut chan *Order, wg *sync.WaitGroup) *Book {
 	return &Book{
-		Orders:        []*Order{},
+		Order:         []*Order{},
 		Transactions:  []*Transaction{},
 		OrdersChan:    orderChan,
 		OrdersChanOut: orderChanOut,
@@ -30,7 +30,6 @@ func (b *Book) AddTransaction(transaction *Transaction, wg *sync.WaitGroup) {
 	buyingShares := transaction.BuyingOrder.PendingShares
 
 	minShares := sellingShares
-
 	if buyingShares < minShares {
 		minShares = buyingShares
 	}
@@ -70,7 +69,6 @@ func (b *Book) Trade() {
 
 					sellOrder.Transactions = append(sellOrder.Transactions, transaction)
 					order.Transactions = append(order.Transactions, transaction)
-
 					b.OrdersChanOut <- sellOrder
 					b.OrdersChanOut <- order
 
@@ -92,7 +90,6 @@ func (b *Book) Trade() {
 
 					buyOrder.Transactions = append(buyOrder.Transactions, transaction)
 					order.Transactions = append(order.Transactions, transaction)
-
 					b.OrdersChanOut <- buyOrder
 					b.OrdersChanOut <- order
 

@@ -1,7 +1,6 @@
 package entity
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -17,16 +16,8 @@ type Transaction struct {
 	DateTime     time.Time
 }
 
-type TransactionType string
-
-const (
-	BUY  TransactionType = "buy"
-	SELL TransactionType = "sell"
-)
-
 func NewTransaction(sellingOrder *Order, buyingOrder *Order, shares int, price float64) *Transaction {
 	total := float64(shares) * price
-
 	return &Transaction{
 		ID:           uuid.New().String(),
 		SellingOrder: sellingOrder,
@@ -39,19 +30,10 @@ func NewTransaction(sellingOrder *Order, buyingOrder *Order, shares int, price f
 }
 
 func (t *Transaction) CalculateTotal(shares int, price float64) {
-	t.Total = float64(shares) * price
-}
-
-func (t *Transaction) AddBuyOrderPendingShares(shares int) {
-	t.BuyingOrder.PendingShares += shares
-}
-
-func (t *Transaction) AddSellOrderPendingShares(shares int) {
-	t.BuyingOrder.PendingShares += shares
+	t.Total = float64(t.Shares) * t.Price
 }
 
 func (t *Transaction) CloseBuyOrder() {
-	fmt.Println("buy pending shares", t.BuyingOrder.PendingShares)
 	if t.BuyingOrder.PendingShares == 0 {
 		t.BuyingOrder.Status = "CLOSED"
 	}
@@ -61,4 +43,12 @@ func (t *Transaction) CloseSellOrder() {
 	if t.SellingOrder.PendingShares == 0 {
 		t.SellingOrder.Status = "CLOSED"
 	}
+}
+
+func (t *Transaction) AddBuyOrderPendingShares(shares int) {
+	t.BuyingOrder.PendingShares += shares
+}
+
+func (t *Transaction) AddSellOrderPendingShares(shares int) {
+	t.SellingOrder.PendingShares += shares
 }
