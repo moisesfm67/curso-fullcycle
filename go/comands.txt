@@ -1,0 +1,4 @@
+go get . // to install all packages
+go get name-package // to install a package
+go run ~diretorio //go run cmd/trade/main.go
+docker compose up //para subir o kafka

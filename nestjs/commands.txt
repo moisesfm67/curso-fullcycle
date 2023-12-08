@@ -1,0 +1,6 @@
+npx nest generate service/module name
+npx nest generate resource
+npm run start:dev
+npx prisma generate
+npm prisma studio
+npx prisma db push

@@ -7,7 +7,7 @@ require (
 	github.com/stretchr/testify v1.8.4
 )
 
-require gopkg.in/confluentinc/confluent-kafka-go.v1 v1.8.2 // indirect
+require gopkg.in/confluentinc/confluent-kafka-go.v1 v1.9.1 // indirect
 
 require (
 	github.com/confluentinc/confluent-kafka-go v1.9.2
