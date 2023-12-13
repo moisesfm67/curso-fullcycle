@@ -1,5 +1,5 @@
-import { Label, TextInput, Button } from "../components/flowbite-components";
 import { revalidateTag } from "next/cache";
+import { Label, TextInput, Button } from "../components/flowbite-components";
 
 async function initTransaction(formData: FormData) {
   "use server";
@@ -8,9 +8,9 @@ async function initTransaction(formData: FormData) {
   const wallet_id = formData.get("wallet_id");
   const asset_id = formData.get("asset_id");
   const type = formData.get("type");
-  console.log(`http://localhost:8000/wallets/${wallet_id}/orders`);
+
   const response = await fetch(
-    `http://localhost:8000/wallets/${wallet_id}/orders`,
+    `http://host.docker.internal:3000/wallets/${wallet_id}/orders`,
     {
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +30,9 @@ async function initTransaction(formData: FormData) {
       }),
     }
   );
+
   revalidateTag(`orders-wallet-${wallet_id}`);
+
   return await response.json();
 }
 
@@ -44,12 +46,16 @@ export function OrderForm(props: {
       <h1>Order Form</h1>
       <form action={initTransaction}>
         <input name="asset_id" type="hidden" defaultValue={props.asset_id} />
+
         <input name="wallet_id" type="hidden" defaultValue={props.wallet_id} />
+
         <input name="type" type="hidden" defaultValue={"BUY"} />
+
         <div>
           <div className="mb-2 block">
             <Label htmlFor="shares" value="Quantidade" />
           </div>
+
           <TextInput
             id="shares"
             name="shares"
@@ -60,11 +66,14 @@ export function OrderForm(props: {
             defaultValue={1}
           />
         </div>
+
         <br />
+
         <div>
           <div className="mb-2 block">
             <Label htmlFor="shares" value="Preço R$" />
           </div>
+
           <TextInput
             id="price"
             name="price"
@@ -75,7 +84,9 @@ export function OrderForm(props: {
             defaultValue={1}
           />
         </div>
+
         <br />
+
         <Button type="submit" color={props.type === "BUY" ? "green" : "red"}>
           Confirmar {props.type === "BUY" ? "compra" : "venda"}
         </Button>

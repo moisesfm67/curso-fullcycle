@@ -1,4 +1,4 @@
-import { ChartComponent } from "../../../components/ChartComponent";
+import { AssetChartComponent } from "../../../components/AssetChatComponent";
 import {
   TabsGroup,
   TabsItem,
@@ -7,6 +7,7 @@ import {
 import MyOrders from "../../../components/MyOrders";
 import { OrderForm } from "../../../components/OrderForm";
 import { HiShoppingCart, HiArrowUp } from "../../../components/react-icons/hi";
+import { SyncOrders } from "../../../components/SyncOrders";
 
 export default async function HomeBrokerPage({
   params,
@@ -18,6 +19,7 @@ export default async function HomeBrokerPage({
       <article className="format format-invert">
         <h1>Home broker - {params.asset_id}</h1>
       </article>
+
       <div className="grid grid-cols-5 flex-grow gap-2 mt-2">
         <div className="col-span-2">
           <div>
@@ -37,6 +39,7 @@ export default async function HomeBrokerPage({
                     type="BUY"
                   />
                 </TabsItem>
+
                 <TabsItem title="Vender" icon={HiArrowUp}>
                   <OrderForm
                     wallet_id={params.wallet_id}
@@ -47,6 +50,7 @@ export default async function HomeBrokerPage({
               </TabsGroup>
             </Card>
           </div>
+
           <div className="mt-2">
             <Card
               theme={{
@@ -56,12 +60,17 @@ export default async function HomeBrokerPage({
                 },
               }}
             >
-              <MyOrders wallet_id={params.wallet_id} />
+              <SyncOrders wallet_id={params.wallet_id}>
+                <div className="max-h-96 overflow-y-auto overflow-hidden">
+                  <MyOrders wallet_id={params.wallet_id} />
+                </div>
+              </SyncOrders>
             </Card>
           </div>
         </div>
+
         <div className="col-span-3 flex flex-grow">
-          <ChartComponent header="Asset 1 - R$ 100" />
+          <AssetChartComponent asset_id={params.asset_id} />
         </div>
       </div>
     </main>

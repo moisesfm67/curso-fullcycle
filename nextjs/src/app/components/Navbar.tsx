@@ -23,7 +23,9 @@ export default function DefaultNavbar() {
           FullCycle Invest
         </span>
       </Navbar.Brand>
+
       <Navbar.Toggle />
+
       <Navbar.Collapse>
         <Navbar.Link
           active={pathname === `/${params.wallet_id}`}
@@ -32,8 +34,10 @@ export default function DefaultNavbar() {
         >
           Home
         </Navbar.Link>
+
         <Navbar.Link href="#">Ativos</Navbar.Link>
       </Navbar.Collapse>
+      
       <div className="flex md:order-2 text-white">Olá {params.wallet_id}</div>
     </Navbar>
   );
