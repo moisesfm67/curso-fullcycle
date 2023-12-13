@@ -12,6 +12,8 @@ export class WalletsController {
 
   @Post()
   create(@Body() body: { id: string }) {
-    return this.walletsService.create(body);
+    return this.walletsService.create({
+      id: body.id,
+    });
   }
 }
